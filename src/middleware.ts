@@ -12,7 +12,11 @@ export default authMiddleware({
     const url = req.nextUrl
     const searchParams = url.searchParams.toString()
     let hostname = req.headers
-
+    console.log("url.pathname", url.pathname);
+    console.log("url.host", url.host);
+    console.log("hostname", hostname);
+    console.log("req.url", req.url);
+    
     const pathWithSearchParams = `${url.pathname}${
       searchParams.length > 0 ? `?${searchParams}` : ''
     }`
@@ -22,7 +26,8 @@ export default authMiddleware({
       .get('host')
       ?.split(`${process.env.NEXT_PUBLIC_DOMAIN}`)
       .filter(Boolean)[0]
-
+    console.log("customSubDomain", customSubDomain);
+    
     if (customSubDomain) {
       return NextResponse.rewrite(
         new URL(`/${customSubDomain}${pathWithSearchParams}`, req.url)
